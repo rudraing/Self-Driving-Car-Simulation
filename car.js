@@ -13,9 +13,9 @@ class Car{
         this.sensor=new Sensor(this);
         this.controls=new Controls();
     }
-    update(){
+    update(roadBorders){
         this.#move();  
-        this.sensor.update();   
+        this.sensor.update(roadBorders);   
       
          
         
@@ -34,13 +34,13 @@ class Car{
        
         if(this.controls.left)
         {
-            this.angle+=0.005;
+            this.angle+=0.02;
             // if(this.x<15) this.x=15;
             // if(this.x>185) this.x=185;
         }
         if(this.controls.right)
         {
-            this.angle-=0.005;
+            this.angle-=0.02;
             // if(this.x<15) this.x=15;
             // if(this.x>185) this.x=185;
         }
