@@ -1,4 +1,6 @@
 class Controls{
+
+    //constructor is used to initialize this the control properties
     constructor(){
         this.forward=false;
         this.left=false;
@@ -8,7 +10,11 @@ class Controls{
         this.#addKeyboardListerners();
 
     }
+    // # is used for declaring private method
+
     #addKeyboardListerners(){
+        //general function in onkeydown=function(event) but it does not help
+        // in calling the constructor that's why we use (event)=> method
         document.onkeydown=(event)=>{
             switch(event.key){
                 case "ArrowLeft":
@@ -24,7 +30,7 @@ class Controls{
                     this.reverse=true;
                     break;
             }
-            console.table(this);
+            // console.table(this);
         }
         document.onkeyup=(event)=>{
             switch(event.key){
@@ -41,7 +47,7 @@ class Controls{
                     this.reverse=false;
                     break;
             }
-            console.table(this);
+            //console.table(this);
         }
     }
 }
