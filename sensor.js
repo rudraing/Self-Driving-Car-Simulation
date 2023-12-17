@@ -3,7 +3,7 @@ class Sensor{
         this.car = car;
         this.rayCount = 4;
         this.rayLength = 100;
-        this.raySpread = Math.PI /4;
+        this.raySpread = Math.PI /2;
 
         this.rays = [];
         this.readings=[];
@@ -11,7 +11,7 @@ class Sensor{
 
     update(roadBorders) {
       this.#castRays();
-      this.reading=[];
+      this.readings=[];
       for(let i=0;i<this.rays.length;i++)
       {
         this.readings.push(
@@ -48,7 +48,7 @@ class Sensor{
                 this.raySpread / 2,
                 -this.raySpread / 2,
                 i / (this.rayCount - 1)
-            );
+            )+this.car.angle;
 
             const start = { x:this.car.x, y:this.car.y };
             const end = {
