@@ -1,13 +1,23 @@
 class Controls{
 
     //constructor is used to initialize this the control properties
-    constructor(){
+    constructor(controlType){
         this.forward=false;
         this.left=false;
         this.right=false;
         this.reverse=false;
 
-        this.#addKeyboardListerners();
+        switch(controlType)
+        {
+            case "KEYS":
+                this.#addKeyboardListerners();
+                break;
+            case "DUMMY":
+                this.forward=true;
+                break;
+
+        }
+        
 
     }
     // # is used for declaring private method
