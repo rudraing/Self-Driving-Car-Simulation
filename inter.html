@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sigi</title>
+    <style>
+        body{
+            margin:0;
+            overflow:hidden;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="mycanvas"></canvas>
+    <script>
+        mycanvas.width=window.innerWidth;
+        mycanvas.height=window.innerHeight;
+
+        const A={x:150,y:70};
+        const B={x:150,y:250};
+        const C={x:50,y:100};
+        const D={x:250,y:200};
+
+        const ctx=mycanvas.getContext("2d");
+        ctx.beginPath();
+        ctx.moveTo(A.x,A.y);
+        ctx.lineTo(B.x,B.y);
+        ctx.moveTo(C.x,C.y);
+        ctx.lineTo(D.x,D.y);
+        ctx.stroke();
+
+        drawdot(A,"A");
+        drawdot(B,"B");
+        drawdot(C,"C");
+        drawdot(D,"D")
+
+        const M={
+            x:lerp(A.x,B.x,0.5),
+            y:lerp(A.y,B.y,0.5)
+        }
+        drawdot(M,"M");
+
+        function lerp(A,B,t)
+        {
+            return A+(B-A)*t;
+        }
+        function drawdot(point,label)
+        {
+            ctx.beginPath();
+            ctx.fillStyle="white";
+            ctx.arc(point.x,point.y,7,0,Math.PI*2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle="black";
+            ctx.textAlign="center";
+            ctx.textBaseline="middle";
+            ctx.fond="bold 14px Arial";
+            ctx.fillText(label,point.x,point.y);
+        }
+       
+    </script>
+</body>
+</html>
