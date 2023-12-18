@@ -9,7 +9,7 @@ class Controls{
 
         switch(controlType)
         {
-            case "KEYS":
+            case "KEYS" || "AI":
                 this.#addKeyboardListerners();
                 break;
             case "DUMMY":

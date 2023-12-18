@@ -126,7 +126,7 @@ class Car{
         if(this.speed<-this.maxspeed) this.speed=-this.maxspeed;
         
     }
-    draw(ctx,color){
+    draw(ctx,color="red",drawSensor=false){
         
         if(this.damaged) ctx.fillStyle="gray";
         else ctx.fillStyle=color;
@@ -140,7 +140,7 @@ class Car{
             }
             ctx.fill();
 
-            if(this.sensor)  this.sensor.draw(ctx);
+            if(this.sensor && drawSensor)  this.sensor.draw(ctx);
         }
     }
     
