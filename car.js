@@ -34,7 +34,7 @@ class Car{
                 s=>s==null?0:1-s.offset
              )
              const outputs=NeuralNetwork.feedforward(offsets,this.brain);
-             console.log(outputs);
+            // console.log(outputs);
 
              if(this.useBrain)
              {
