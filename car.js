@@ -1,5 +1,5 @@
 class Car{
-    constructor(x,y,width,height,controlType,maxspeed=3){
+    constructor(x,y,width,height,controlType,maxspeed=3,imageUrl='./rr.png'){
         this.x=x;
         this.y=y;
         this.width=width;
@@ -21,6 +21,9 @@ class Car{
 
         this.polygon=[];
         this.damaged=false;
+
+        this.image=document.createElement('img');
+        this.image.src=imageUrl;
     }
     update(roadBorders,traffic){
         if(!this.damaged){
@@ -131,16 +134,14 @@ class Car{
         if(this.damaged) ctx.fillStyle="gray";
         else ctx.fillStyle=color;
 
-        if(this.polygon.length!=0){
-            ctx.beginPath();
-            ctx.moveTo(this.polygon[0].x,this.polygon[0].y);
-            for(let i=1;i<this.polygon.length;i++)
-            {
-                    ctx.lineTo(this.polygon[i].x,this.polygon[i].y);
-            }
-            ctx.fill();
+        if (this.polygon.length != 0) {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(-this.angle);
+            ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
+            ctx.restore();
 
-            if(this.sensor && drawSensor)  this.sensor.draw(ctx);
+            if (this.sensor && drawSensor) this.sensor.draw(ctx);
         }
     }
     

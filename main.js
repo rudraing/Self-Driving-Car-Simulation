@@ -8,7 +8,7 @@ const networkCanvas = document.getElementById("networkCanvas");
 
 // Set the width of the canvas to 200 pixels
 networkCanvas.width = 300;
-
+const src='./rr.png';
 
 // Get the 2D rendering context of the canvas
 const carCtx = carCanvas.getContext("2d");
@@ -65,7 +65,7 @@ function generateCars(N)
     const car=[];
     for(let i=1;i<=N;i++)
     {
-        car.push(new Car(road.getLaneCenter(0), 100, 30, 50,"AI",5))
+        car.push(new Car(road.getLaneCenter(0), 100, 30, 50,"AI",5,'./rr2.png'));
     }
     return car;
 }
@@ -100,7 +100,7 @@ function animate(time) {
     {
         traffic[i].draw(carCtx,"red");
     }
-    carCtx.globalAlpha=0.1;
+    carCtx.globalAlpha=0.0;
     for(let i=0;i<cars.length;i++)
     {
         cars[i].draw(carCtx,"blue");
