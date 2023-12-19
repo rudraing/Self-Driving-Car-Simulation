@@ -16,6 +16,7 @@ class Car{
              this.brain=new NeuralNetwork(
                 [ this.sensor.rayCount,6,4]
              );
+             this.brain.addHiddenLayer(8);
         }
         this.controls=new Controls(controlType);
 
@@ -39,13 +40,13 @@ class Car{
              const outputs=NeuralNetwork.feedforward(offsets,this.brain);
             // console.log(outputs);
 
-             if(this.useBrain)
-             {
-                this.controls.forward=outputs[0];
-                this.controls.left=outputs[1];
-                this.controls.right=outputs[2];
-                this.controls.reverse=outputs[3];
-             }
+            if (this.useBrain) {
+                this.controls.forward = outputs[0];
+                this.controls.left = outputs[1] ;
+                this.controls.right = outputs[2] ;
+                this.controls.reverse = outputs[3]; 
+            }
+            
          }
               
     }
@@ -93,19 +94,20 @@ class Car{
         }
         if(this.controls.reverse){
             this.speed-=this.acceleration;
+            this.speed-=0.1;
         }
         if(Math.abs(this.speed)<this.friction) this.speed=0;
 
        
         if(this.controls.left)
         {
-            this.angle+=0.02;
+            this.angle+=0.03;
             // if(this.x<15) this.x=15;
             // if(this.x>185) this.x=185;
         }
         if(this.controls.right)
         {
-            this.angle-=0.02;
+            this.angle-=0.03;
             // if(this.x<15) this.x=15;
             // if(this.x>185) this.x=185;
         }

@@ -28,25 +28,28 @@ if(localStorage.getItem("bestBrain")){
         );
         if(i!=0)
         {
-            NeuralNetwork.mutate(cars[i].brain,0.22);
+            NeuralNetwork.mutate(cars[i].brain,0.2);
         }
     }
    
 }
-const traffic=[
-    new Car(road.getLaneCenter(1), -100, 30, 50,"DUMMY",0.5),
-    new Car(road.getLaneCenter(1), -300, 30, 50,"DUMMY",0.5),
-    new Car(road.getLaneCenter(2), -300, 30, 50,"DUMMY",0.5),
-    new Car(road.getLaneCenter(0), -500, 30, 50,"DUMMY",0.5),
-    new Car(road.getLaneCenter(0), -800, 30, 50,"DUMMY",0.5),
-    new Car(road.getLaneCenter(1), -1000, 30, 50,"DUMMY",0.5),
-    new Car(road.getLaneCenter(2), -1200, 30, 50,"DUMMY",0.5),
-    new Car(road.getLaneCenter(0), -1500, 30, 50,"DUMMY",0.5),
-    new Car(road.getLaneCenter(2), -10000, 30, 50,"DUMMY",0.5),
-    new Car(road.getLaneCenter(0), -900, 30, 50,"DUMMY",0.5),
-    new Car(road.getLaneCenter(1), -600, 30, 50,"DUMMY",0.5)
+function randomTraffic(N)
+{
+    const traffic=[];
+    let y_coordinate=-100;
+    for(let i=0;i<N;i++)
+    {
 
-];
+        const laneNumber=Math.floor((Math.random()*10)%3);
+        const randomSize=Math.floor((Math.random()*100));
+        const randomSpeed=Math.random()%(0.2);
+        console.log(laneNumber);
+        traffic.push(new Car(road.getLaneCenter(laneNumber),y_coordinate,30,50+randomSize,"DUMMY",0.5+randomSpeed));
+        y_coordinate-=150+randomSize;
+    }
+    return traffic;
+}
+const traffic=randomTraffic(100);
 // Draw the initial state of the car on the canvas
 cars[0].draw(carCtx);
 
@@ -63,12 +66,15 @@ function discard(){
 function generateCars(N)
 {
     const car=[];
+    
+    const laneNumber=Math.floor((Math.random()*10)%3);
     for(let i=1;i<=N;i++)
     {
-        car.push(new Car(road.getLaneCenter(0), 100, 30, 50,"AI",5,'./rr2.png'));
+        car.push(new Car(road.getLaneCenter(laneNumber), 100, 30, 50,"AI",5,'./rr2.png'));
     }
     return car;
 }
+console.log(traffic);
 
 // Animation loop function
 function animate(time) {
@@ -108,7 +114,7 @@ function animate(time) {
     carCtx.globalAlpha=1;
     bestcar.draw(carCtx,"blue",true);
     
-    console.log(localStorage);
+    //console.log(localStorage);
     carCtx.restore();
     // Request the next animation frame, creating a loop
     networkCtx.lineDashOffset=-time/70;

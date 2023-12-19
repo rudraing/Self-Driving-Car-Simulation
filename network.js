@@ -6,6 +6,14 @@ class NeuralNetwork {
         }
     }
 
+    addHiddenLayer(neuronCount) {
+        // Insert the new hidden layer before the output layer
+        this.levels.splice(this.levels.length - 1, 0, new Level(this.levels[this.levels.length - 2].outputs.length, neuronCount));
+        // Update the output layer to connect to the new hidden layer
+        this.levels[this.levels.length - 1] = new Level(neuronCount, this.levels[this.levels.length - 1].outputs.length);
+    }
+
+
     static feedforward(givenInputs, network) {
         let outputs = Level.feedforward(givenInputs, network.levels[0]);
         for (let i = 1; i < network.levels.length; i++) {
@@ -14,28 +22,16 @@ class NeuralNetwork {
         return outputs;
     }
 
-    static mutate(network,amount=1)
-    {
-        network.levels.forEach(level => {
-            for(let i=0;i<level.biases.length;i++)
-            {
-                level.biases[i]=lerp(
-                    level.biases[i],
-                    Math.random()*2-1,
-                    amount
-                )
-            } 
-            for(let i=0;i<level.weights.length;i++)
-            {
-                for(let j=0;j<level.weights[i].length;j++)
-                {
-                    level.weights[i][j]=lerp(
-                        level.weights[i][j],
-                        Math.random()*2-1,
-                        amount
-                    )
+    static mutate(network, amount = 1) {
+        network.levels.forEach((level) => {
+            for (let i = 0; i < level.biases.length; i++) {
+                level.biases[i] = lerp(level.biases[i], Math.random() * 2 - 1, amount);
+            }
+            for (let i = 0; i < level.weights.length; i++) {
+                for (let j = 0; j < level.weights[i].length; j++) {
+                    level.weights[i][j] = lerp(level.weights[i][j], Math.random() * 2 - 1, amount);
                 }
-            }           
+            }
         });
     }
 }
@@ -64,6 +60,7 @@ class Level {
             level.biases[i] = Math.random() * 2 - 1;
         }
     }
+
 
     static feedforward(givenInputs, level) {
         for (let i = 0; i < level.inputs.length; i++) {
