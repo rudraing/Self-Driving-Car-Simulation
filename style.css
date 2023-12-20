@@ -27,3 +27,21 @@ button:hover{
 #networkCanvas{
     background:black;
 }
+.car-counter {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    padding: 20px;
+    margin: 20px;
+    margin-bottom: 600px;
+    margin-left: -300px;
+}
+
+.car-counter span {
+    font-weight: bold;
+    font-size: 24px;
+    margin-right: 5px;
+}

@@ -2,7 +2,7 @@
 const carCanvas = document.getElementById("carCanvas");
 
 // Set the width of the canvas to 200 pixels
-carCanvas.width = 250;
+carCanvas.width = 500;
 
 const networkCanvas = document.getElementById("networkCanvas");
 
@@ -40,16 +40,30 @@ function randomTraffic(N)
     for(let i=0;i<N;i++)
     {
 
-        const laneNumber=Math.floor((Math.random()*10)%3);
+        const laneNumber=Math.floor((Math.random()*10)%5);
         const randomSize=Math.floor((Math.random()*100));
         const randomSpeed=Math.random()%(0.2);
-        console.log(laneNumber);
+       // console.log(laneNumber);
         traffic.push(new Car(road.getLaneCenter(laneNumber),y_coordinate,30,50+randomSize,"DUMMY",0.5+randomSpeed));
-        y_coordinate-=150+randomSize;
+        y_coordinate-=100+randomSize;             
     }
     return traffic;
 }
 const traffic=randomTraffic(100);
+
+function carCounter(carCoordinate)
+{
+    let carPasses=0;
+    //console.log(traffic.length);
+    for(let i=0;i<traffic.length;i++)
+    {
+       // console.log(traffic[i].y);
+        if(traffic[i].y>carCoordinate) carPasses+=1;
+    }
+   // console.log(carCoordinate);
+    return carPasses;
+}
+
 // Draw the initial state of the car on the canvas
 cars[0].draw(carCtx);
 
@@ -67,14 +81,14 @@ function generateCars(N)
 {
     const car=[];
     
-    const laneNumber=Math.floor((Math.random()*10)%3);
+    const laneNumber=Math.floor((Math.random()*10)%5);
     for(let i=1;i<=N;i++)
     {
-        car.push(new Car(road.getLaneCenter(laneNumber), 100, 30, 50,"AI",5,'./rr2.png'));
+        car.push(new Car(road.getLaneCenter(laneNumber), 100, 30, 50,"AI",10,'./rr2.png'));
     }
     return car;
 }
-console.log(traffic);
+//console.log(traffic);
 
 // Animation loop function
 function animate(time) {
@@ -93,6 +107,10 @@ function animate(time) {
             ...cars.map(c=>c.y)
         )
     );
+
+    const carPasses=carCounter(bestcar.y);
+    document.getElementById("counter").textContent=carPasses;
+    console.log(carPasses);
     // Set the height of the canvas to the window's inner height
     carCanvas.height = window.innerHeight;
     networkCanvas.height = window.innerHeight;
