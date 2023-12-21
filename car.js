@@ -1,32 +1,45 @@
 class Car{
     constructor(x,y,width,height,controlType,maxspeed=3,imageUrl='./rr.png'){
+
+        //x and y coordinate of the given car 
         this.x=x;
         this.y=y;
         this.width=width;
         this.height=height;
 
+        //dynamics declaration of car 
         this.speed=0;
         this.acceleration=0.2;
         this.friction=0.05;
         this.angle=0;
         this.maxspeed=maxspeed;
+
+        //declaring const for network 
         this.useBrain=controlType=="AI";
+
+        //declaring sensors and network for selected or main car only 
         if(controlType!="DUMMY"){
              this.sensor=new Sensor(this);
              this.brain=new NeuralNetwork(
                 [ this.sensor.rayCount,6,4]
              );
              this.brain.addHiddenLayer(8);
+             this.brain.addHiddenLayer(6);
         }
         this.controls=new Controls(controlType);
 
+        //const which contains coordinates of car 
         this.polygon=[];
         this.damaged=false;
 
+        //const used for applying the image of car in the rectangle
         this.image=document.createElement('img');
         this.image.src=imageUrl;
+
     }
+    //updation function 
     update(roadBorders,traffic){
+
         if(!this.damaged){
             this.#move();  
             this.damaged=this.#assDamage(roadBorders,traffic);
@@ -38,18 +51,30 @@ class Car{
                 s=>s==null?0:1-s.offset
              )
              const outputs=NeuralNetwork.feedforward(offsets,this.brain);
-            // console.log(outputs);
 
-            if (this.useBrain) {
-                this.controls.forward = outputs[0];
-                this.controls.left = outputs[1] ;
-                this.controls.right = outputs[2] ;
-                this.controls.reverse = outputs[3]; 
+             if (this.useBrain) {
+
+                document.getElementById("control1").textContent=outputs[0].toFixed(4);;
+                this.controls.forward = outputs[0] >= 0.6 ? 1 : 0;
+
+                document.getElementById("control2").textContent=outputs[1].toFixed(4);;
+                this.controls.left = outputs[1] >= 0.7 ? 1 : 0;
+                if(outputs[2]<outputs[1]) this.controls.left=1; 
+
+                document.getElementById("control3").textContent=outputs[2].toFixed(4);;
+                this.controls.right = outputs[2] >= 0.7 ? 1 : 0;
+                if(outputs[2]>outputs[1]) this.controls.right=1; 
+
+                document.getElementById("control4").textContent=outputs[3].toFixed(4);;
+                if(this.controls.right || this.controls.left) outputs[3]+=0.01
+                this.controls.reverse = outputs[3] >= 0.5 ? 1 : 0;
             }
             
-         }
-              
+         } 
     }
+
+    //function to check whether the car is damaged or not 
+    // # symbol if used of private declaration of any function 
     #assDamage(roadBorders,traffic){
         for(let i=0;i<roadBorders.length;i++)
         {
@@ -62,7 +87,9 @@ class Car{
         return false;
     }
     
+    // function to store current coordinates of a car 
     #createPolygon(){
+
         const points=[];
         const rad=Math.hypot(this.width,this.height)/2;
         const alpha=Math.atan2(this.width,this.height);
@@ -84,32 +111,29 @@ class Car{
             y:this.y-Math.cos(Math.PI+this.angle+alpha)*rad
         })
         return points;
-
     }
+    //fucntion to change the dynamics of the car 
+    //movement of the function
     #move()
     {
         if(this.controls.forward){
-            this.speed+=this.acceleration;
-            
+            this.speed+=this.acceleration; 
         }
         if(this.controls.reverse){
             this.speed-=this.acceleration;
             this.speed-=0.1;
         }
-        if(Math.abs(this.speed)<this.friction) this.speed=0;
-
-       
+        if(Math.abs(this.speed)<this.friction) 
+        {
+            this.speed=0;
+        }
         if(this.controls.left)
         {
             this.angle+=0.03;
-            // if(this.x<15) this.x=15;
-            // if(this.x>185) this.x=185;
         }
         if(this.controls.right)
         {
             this.angle-=0.03;
-            // if(this.x<15) this.x=15;
-            // if(this.x>185) this.x=185;
         }
 
         if(this.speed>0) this.speed-=this.friction;
@@ -125,8 +149,6 @@ class Car{
         this.x-=Math.sin(this.angle)*this.speed;
         this.y-=Math.cos(this.angle)*this.speed;
 
-        // if(this.y<25){ this.y=25;this.speed=0;}
-        // if(this.y>683){ this.y=683;this.speed=0;}
         if(this.speed>this.maxspeed) this.speed=this.maxspeed;
         if(this.speed<-this.maxspeed) this.speed=-this.maxspeed;
         

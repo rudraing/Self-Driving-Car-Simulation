@@ -1,5 +1,5 @@
 class Road{
-    constructor(x,width,lanecount=5){
+    constructor(x,width,lanecount=3){
         this.x=x;
         this.width=width;
         this.lanecount=lanecount;
@@ -11,6 +11,7 @@ class Road{
         this.top=-inf;
         this.bottom=inf;
 
+        //these are the coodinates of the road borders
         const topLeft={x:this.left,y:this.top};
         const topRight={x:this.right,y:this.top};
         const bottomLeft={x:this.left,y:this.bottom};
@@ -20,11 +21,14 @@ class Road{
             [topRight,bottomRight]
         ];
     }
+
+    //function for finding the center of the lane 
     getLaneCenter(laneIndex)
     {
         const lanewidth=this.width/this.lanecount;
         return this.left+lanewidth/2+Math.min(laneIndex,this.lanecount-1)*lanewidth;
     }
+
     draw(ctx){
         ctx.lineWidth=3;
         ctx.strokeStyle="white";

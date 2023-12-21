@@ -45,3 +45,22 @@ button:hover{
     font-size: 24px;
     margin-right: 5px;
 }
+.controls-display {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size:20px;
+    padding: 20px;
+    margin: 20px;
+    margin-bottom: 300px;
+    margin-left: -300px;
+    margin-right: 50px;
+}
+
+.controls-display span {
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 5px;
+}
