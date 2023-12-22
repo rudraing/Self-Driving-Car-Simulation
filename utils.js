@@ -1,12 +1,8 @@
-
-//Linear  interportability function 
-//lerp is use to find the point between any two line 
 function lerp(A,B,t)
 {
     return A+(B-A)*t;
 }
 
-//function used for finding the interseection points and its offsets to one of the point
 function getIntersection(A,B,C,D){
     const tTop=(D.x-C.x)*(A.y-C.y)-(D.y-C.y)*(A.x-C.x);
     const uTop=(C.y-A.y)*(A.x-B.x)-(C.x-A.x)*(A.y-B.y);
@@ -28,7 +24,6 @@ function getIntersection(A,B,C,D){
     return null;
 }
 
-//function to check the collision 
 function polyIntersect(poly1,poly2)
 {
     for(let i=0;i<poly1.length;i++)

@@ -1,10 +1,9 @@
 class Sensor{
     constructor(car) {
-
         this.car = car;
         this.rayCount = 50;
         this.rayLength = 200;
-        this.raySpread = Math.PI /1.2;
+        this.raySpread = Math.PI /1.5;
 
         this.rays = [];
         this.readings=[];
@@ -21,7 +20,6 @@ class Sensor{
       }
     }
 
-    //function to check the collision between the road borders and the traffic
     #getReading(ray,roadBorders,traffic)
     {
         let touches=[];
@@ -57,7 +55,6 @@ class Sensor{
         }
     }
 
-    //function for casting rays
     #castRays(){
         this.rays= [];
         for (let i = 0; i < this.rayCount; i++) {

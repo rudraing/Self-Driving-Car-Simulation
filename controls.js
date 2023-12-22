@@ -1,4 +1,5 @@
 class Controls{
+
     //constructor is used to initialize this the control properties
     constructor(controlType){
         this.forward=false;
@@ -6,7 +7,6 @@ class Controls{
         this.right=false;
         this.reverse=false;
 
-        //switch used for altering the path based on the controltype
         switch(controlType)
         {
             case "KEYS" || "AI":
@@ -15,10 +15,13 @@ class Controls{
             case "DUMMY":
                 this.forward=true;
                 break;
-        }
-    }
 
+        }
+        
+
+    }
     // # is used for declaring private method
+
     #addKeyboardListerners(){
         //general function in onkeydown=function(event) but it does not help
         // in calling the constructor that's why we use (event)=> method
@@ -37,6 +40,7 @@ class Controls{
                     this.reverse=true;
                     break;
             }
+            // console.table(this);
         }
         document.onkeyup=(event)=>{
             switch(event.key){
@@ -53,6 +57,7 @@ class Controls{
                     this.reverse=false;
                     break;
             }
+            //console.table(this);
         }
     }
 }
