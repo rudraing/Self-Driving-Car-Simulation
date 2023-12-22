@@ -17,7 +17,6 @@ class Car{
                 [ this.sensor.rayCount,6,4]
              );
              this.brain.addHiddenLayer(8);
-             this.brain.addHiddenLayer(6);
         }
         this.controls=new Controls(controlType);
 
@@ -41,10 +40,10 @@ class Car{
              const outputs=NeuralNetwork.feedforward(offsets,this.brain);
             // console.log(outputs);
 
-             if (this.useBrain) {
+              if (this.useBrain) {
 
                 document.getElementById("control1").textContent=outputs[0].toFixed(4);;
-                this.controls.forward = outputs[0] >= 0.6 ? 1 : 0;
+                this.controls.forward = outputs[0] >= 0.4 ? 1 : 0;
 
                 document.getElementById("control2").textContent=outputs[1].toFixed(4);;
                 this.controls.left = outputs[1] >= 0.7 ? 1 : 0;

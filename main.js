@@ -2,7 +2,7 @@
 const carCanvas = document.getElementById("carCanvas");
 
 // Set the width of the canvas to 200 pixels
-carCanvas.width = 500;
+carCanvas.width = 250;
 
 const networkCanvas = document.getElementById("networkCanvas");
 
@@ -40,7 +40,7 @@ function randomTraffic(N)
     for(let i=0;i<N;i++)
     {
 
-        const laneNumber=Math.floor((Math.random()*10)%5);
+        const laneNumber=Math.floor((Math.random()*10)%3);
         const randomSize=Math.floor((Math.random()*100));
         const randomSpeed=Math.random()%(0.2);
        // console.log(laneNumber);
@@ -81,10 +81,10 @@ function generateCars(N)
 {
     const car=[];
     
-    const laneNumber=Math.floor((Math.random()*10)%5);
+    const laneNumber=Math.floor((Math.random()*10)%3);
     for(let i=1;i<=N;i++)
     {
-        car.push(new Car(road.getLaneCenter(laneNumber), 100, 30, 50,"AI",10,'./rr2.png'));
+        car.push(new Car(road.getLaneCenter(laneNumber), 100, 30, 50,"AI",7,'./rr2.png'));
     }
     return car;
 }
@@ -124,7 +124,7 @@ function animate(time) {
     {
         traffic[i].draw(carCtx,"red");
     }
-    carCtx.globalAlpha=0.0;
+    carCtx.globalAlpha=0.2;
     for(let i=0;i<cars.length;i++)
     {
         cars[i].draw(carCtx,"blue");
@@ -136,6 +136,6 @@ function animate(time) {
     carCtx.restore();
     // Request the next animation frame, creating a loop
     networkCtx.lineDashOffset=-time/70;
-    Visualizer.drawNetwork(networkCtx,cars[0].brain);
+    Visualizer.drawNetwork(networkCtx,bestcar.brain);
     requestAnimationFrame(animate);
 }

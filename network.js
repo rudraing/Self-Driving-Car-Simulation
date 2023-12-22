@@ -46,7 +46,9 @@ class Level {
         for (let i = 0; i < inputCount; i++) {
             this.weights[i] = new Array(outputCount);
         }
-        Level.#randomize(this);
+        //Level.#randomize(this);
+        Level.#xavierInitialize(this);
+        let p=0;
     }
 
     static #randomize(level) {
@@ -61,6 +63,26 @@ class Level {
         }
     }
 
+    static #xavierInitialize(level) {
+        const scale = Math.sqrt(1 / (level.inputs.length + level.outputs.length));
+        console.log(scale);
+        console.log(this.p);
+        for (let i = 0; i < level.inputs.length; i++) {
+            for (let j = 0; j < level.outputs.length; j++) {
+                // Xavier initialization for weights between -1 and 1
+                level.weights[i][j] = (Math.random() * 2 - 1) * scale;
+            }
+        }
+    
+        for (let i = 0; i < level.biases.length; i++) {
+            // Xavier initialization for biases between -1 and 1
+            level.biases[i] = (Math.random() * 2 - 1) * scale;
+        }
+    }
+    
+    static sigmoid(x) {
+        return 1 / (1 + Math.exp(-x));
+    }
 
     static feedforward(givenInputs, level) {
         for (let i = 0; i < level.inputs.length; i++) {
@@ -71,9 +93,22 @@ class Level {
             for (let j = 0; j < level.inputs.length; j++) {
                 sum += level.inputs[j] * level.weights[j][i];
             }
-            if(sum>level.biases[i]) level.outputs[i]=1;
-            else level.outputs[i]=0;
+            level.outputs[i] = Level.sigmoid(sum + level.biases[i]);
         }
         return level.outputs;
     }
+    // static feedforward(givenInputs, level) {
+    //     for (let i = 0; i < level.inputs.length; i++) {
+    //         level.inputs[i] = givenInputs[i];
+    //     }
+    //     for (let i = 0; i < level.outputs.length; i++) {
+    //         let sum = 0;
+    //         for (let j = 0; j < level.inputs.length; j++) {
+    //             sum += level.inputs[j] * level.weights[j][i];
+    //         }
+    //         if(sum>level.biases[i]) level.outputs[i]=1;
+    //         else level.outputs[i]=0;
+    //     }
+    //     return level.outputs;
+    // }
 }
