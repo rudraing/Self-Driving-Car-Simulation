@@ -5,14 +5,15 @@ class NeuralNetwork {
             this.levels.push(new Level(neuronCounts[i], neuronCounts[i + 1]));
         }
     }
-    
-    //function to add new hidden layer in the network
+
+    // Function to add a new hidden layer in the network
     addHiddenLayer(neuronCount) {
-        this.levels.splice(this.levels.length - 1, 0, new Level(this.levels[this.levels.length - 2].outputs.length, neuronCount));
-        this.levels[this.levels.length - 1] = new Level(neuronCount, this.levels[this.levels.length - 1].outputs.length);
+        const lastHiddenLayerIndex = this.levels.length - 2;
+        this.levels.splice(lastHiddenLayerIndex, 0, new Level(this.levels[lastHiddenLayerIndex].outputs.length, neuronCount));
+        this.levels[lastHiddenLayerIndex + 1] = new Level(neuronCount, this.levels[lastHiddenLayerIndex + 1].outputs.length);
     }
 
-    //feed forward network
+    // Feedforward network
     static feedforward(givenInputs, network) {
         let outputs = Level.feedforward(givenInputs, network.levels[0]);
         for (let i = 1; i < network.levels.length; i++) {
@@ -21,8 +22,7 @@ class NeuralNetwork {
         return outputs;
     }
 
-
-    //mutation in the biases and weights of the nodes
+    // Mutation in the biases and weights of the nodes
     static mutate(network, amount = 1) {
         network.levels.forEach((level) => {
             for (let i = 0; i < level.biases.length; i++) {

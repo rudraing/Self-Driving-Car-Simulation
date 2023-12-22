@@ -24,7 +24,7 @@ function generateCars(N)
     const laneNumber=Math.floor((Math.random()*10)%3);
     for(let i=1;i<=N;i++)
     {
-        car.push(new Car(road.getLaneCenter(laneNumber), 100, 30, 50,"AI",10,'./rr2.png'));
+        car.push(new Car(road.getLaneCenter(laneNumber), 100, 30, 50,"AI",7,'./rr2.png'));
     }
     return car;
 }
@@ -128,6 +128,6 @@ function animate(time) {
     networkCtx.lineDashOffset=-time/70;
 
     //visualizer 
-    Visualizer.drawNetwork(networkCtx,cars[0].brain);
+    Visualizer.drawNetwork(networkCtx,bestcar.brain);
     requestAnimationFrame(animate);
 }
